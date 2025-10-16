@@ -1,6 +1,7 @@
+// lib/data/models/device_model.dart
 class Device {
   final String alive;
-  final String device;
+  final String device; // mapped from "divice" in backend
   final String ip;
   final String mac;
   final String name;
@@ -16,13 +17,16 @@ class Device {
   });
 
   factory Device.fromJson(Map<String, dynamic> json) {
+    // Algunos backends tienen la clave "divice" con typo — lo manejamos.
+    final deviceField = json['device'] ?? json['divice'] ?? '';
+
     return Device(
-      alive: json['alive'] ?? '',
-      device: json['divice'] ?? '', // <- nota: tu JSON original tiene "divice"
-      ip: json['ip'] ?? '',
-      mac: json['mac'] ?? '',
-      name: json['name'] ?? '',
-      via: json['via'] ?? '',
+      alive: (json['alive'] ?? '').toString(),
+      device: deviceField.toString(),
+      ip: (json['ip'] ?? '').toString(),
+      mac: (json['mac'] ?? '').toString(),
+      name: (json['name'] ?? '').toString(),
+      via: (json['via'] ?? '').toString(),
     );
   }
 
